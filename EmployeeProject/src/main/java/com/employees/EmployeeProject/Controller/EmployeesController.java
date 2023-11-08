@@ -37,6 +37,14 @@ public class EmployeesController {
 		return employeeService.getEmployees();
 	}
 	
+	@GetMapping("employees/{empId}")
+	public Employee getEmployee(@PathVariable long empId) throws UserIdNotFoundException {
+		if(empId<1 || empId>= Long.MAX_VALUE)
+			throw new UserIdNotFoundException("User id with id(" + empId + ") is not present!");
+		
+		return employeeService.getEmployee(empId);
+	}
+	
 	
 	@PostMapping("employees/") 
 	public Employee addEmployee(@RequestBody Employee emp ) {
