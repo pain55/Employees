@@ -11,4 +11,7 @@ public interface EmployeeService {
 	public List<Employee> getEmployees();
 	
 	public Employee updateEmployee(Employee emp);
+	
+	
+	public boolean containsEmpId(long empId);
 }

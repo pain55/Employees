@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.employees.EmployeeProject.Entity.Employee;
+import com.employees.EmployeeProject.Exceptions.UserIdNotFoundException;
 import com.employees.EmployeeProject.Service.EmployeeService;
 
 @RestController
@@ -44,11 +45,16 @@ public class EmployeesController {
 	}
 	
 	@PutMapping("employees/{id}")
-	public ResponseEntity<?> updateEmployee(@RequestBody Employee emp, @PathVariable long id) {
+	public ResponseEntity<?> updateEmployee(@RequestBody Employee emp, @PathVariable long id) throws UserIdNotFoundException {
+		if(id>= Long.MAX_VALUE-1 || employeeService.containsEmpId(id) == false )
+			throw new UserIdNotFoundException("User id with id(" +id + ") is not present!");
+		
+		
 		employeeService.updateEmployee(emp);
 		
 		return ResponseEntity.ok(emp);
 	}
+	
 	
 	
 }
